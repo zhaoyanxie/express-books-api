@@ -8,9 +8,9 @@ const mongoose = require("mongoose");
 describe("routes/books", () => {
   let db;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const dbUri = "mongodb://localhost/express_blog_api_test_db";
-    db = mongoose.connect(dbUri, () => {
+    db = await mongoose.connect(dbUri, () => {
       console.log("connected to test DB successfully");
     });
 
