@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 
 const index = require("./routes/index");
 const books = require("./routes/books");
-const authors = require("./routes/authors");
+// const authors = require("./routes/authors");
+const authorRouter = require("./routes/authors");
 const app = express();
 
 mongoose.connect('mongodb://localhost/jumpstart');
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", index);
 app.use("/books", books);
-app.use("/authors", authors);
+// app.use("/authors", authors);
+authorRouter(app);
 
 module.exports = app;

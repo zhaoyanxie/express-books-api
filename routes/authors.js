@@ -5,8 +5,9 @@ const Author = require("../models/author");
 const Book = require("../models/book");
 
 router.get("/", async (req, res, next) => {
-  const author = await Author.find();
-  res.json(author);
+  // const author = await Author.find();
+  // res.json(author);
+  res.json({message: "ok"});
 });
 
 // find books by author id
@@ -40,4 +41,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-module.exports = router;
+module.exports = app => {
+  app.use('/authors', router) 
+}
