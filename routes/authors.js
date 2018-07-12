@@ -5,9 +5,8 @@ const Author = require("../models/author");
 const Book = require("../models/book");
 
 router.get("/", async (req, res, next) => {
-  // const author = await Author.find();
-  // res.json(author);
-  res.json({message: "ok"});
+  const author = await Author.find();
+  res.json(author);
 });
 
 // find books by author id
@@ -28,7 +27,8 @@ router.get("/:authorId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const newAuthor = new Author({
-      name: req.body.name
+      name: req.body.name,
+      age: req.body.age
     });
   
     await newAuthor.save();
@@ -42,5 +42,6 @@ router.post("/", async (req, res, next) => {
 });
 
 module.exports = app => {
+  app.use(express.json());
   app.use('/authors', router) 
 }
