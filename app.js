@@ -4,9 +4,10 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 
 const index = require("./routes/index");
-const books = require("./routes/books");
+// const books = require("./routes/books");
 // const authors = require("./routes/authors");
-const authorRouter = require("./routes/authors");
+const booksRouter = require("./routes/books");
+const authorsRouter = require("./routes/authors");
 const app = express();
 
 mongoose.connect('mongodb://localhost/jumpstart');
@@ -21,8 +22,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", index);
-app.use("/books", books);
+// app.use("/books", books);
 // app.use("/authors", authors);
-authorRouter(app);
+authorsRouter(app);
+booksRouter(app);
 
 module.exports = app;

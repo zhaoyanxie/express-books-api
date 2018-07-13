@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const Books = require("../models/book");
+const Book = require("../models/book");
 
 /* GET books listing. */
 router.get("/", async (req, res, next) => {
   try {
-    const books = await Books.find().populate("author");
+    const books = await Book.find().populate("author");
     res.json(books);
   } catch (error) {
     next(error);
@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
 
 // find book by book id
 router.get("/:id", (req, res, next) => {
-  Books.findById(req.params.id, (error, book) => {
+  Book.findById(req.params.id, (error, book) => {
     if (!error) res.json(book);
     else res.json({ message: "Book not found" });
   });
@@ -23,22 +23,22 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   // try {
-    const newBook = new Books({
-      title: req.body.title,
-      author: req.body.authorId
-    });
+  const newBook = new Book({
+    title: req.body.title,
+    author: req.body.authorId
+  });
 
-    await newBook.save();
+  await newBook.save();
 
-    res.json({ message: "new book created successfully" });
+  res.json({ message: "new book created successfully" });
   // } catch (error) {
-    // res.json(error.message);
-    // next(error);
+  // res.json(error.message);
+  // next(error);
   // }
 });
 
 router.put("/:id", (req, res, next) => {
-  Books.findById(req.params.id, (error, book) => {
+  Book.findById(req.params.id, (error, book) => {
     if (!error) {
       book = { ...book, ...req.body };
       book.save();
@@ -50,10 +50,13 @@ router.put("/:id", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
-  Books.findByIdAndRemove(req.params.id, (error, book) => {
+  Book.findByIdAndRemove(req.params.id, (error, book) => {
     if (!error) res.json({ message: `delete book with id ${req.params.id}` });
     else res.json(error);
   });
 });
 
-module.exports = router;
+module.exports = module.exports = app => {
+  app.use(express.json());
+  app.use("/books", router);
+};
