@@ -9,11 +9,12 @@ const index = require("./routes/index");
 const booksRouter = require("./routes/books");
 const authorsRouter = require("./routes/authors");
 const app = express();
+const mongodb_uri = process.env.MONGODB_URI || "mongodb://localhost/jumpstart";
 
-mongoose.connect('mongodb://localhost/jumpstart');
-const db = mongoose.connection
-db.on('error', error => {
-    console.error('An error occurred!', error)
+mongoose.connect(mongodb_uri);
+const db = mongoose.connection;
+db.on("error", error => {
+  console.error("An error occurred!", error);
 });
 // db.once("open", )
 
